@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="HF_DP:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/HF_DP_jar</output-path>
+    <root id="archive" name="HF_DP.jar">
+      <element id="module-output" name="HF_DP" />
+    </root>
+  </artifact>
+</component>

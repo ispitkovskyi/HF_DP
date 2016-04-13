@@ -1,0 +1,52 @@
+1. Navigate to /bin directory of project, run:
+    rmiregistry
+2. Get IP address of your computer (where rmiregistry was executed).
+
+3. Navigate to /bin directory of project, run server (gumball machine):
+    java -Djava.rmi.server.hostname=192.168.0.105 headfirst.proxy.gumball.GumballMachineTestDrive 192.168.0.105 100
+
+4. Navigate to /bin directory of project, run client (monitor):
+    java -Djava.rmi.server.hostname=192.168.0.105 headfirst.proxy.gumball.GumballMonitorTestDrive 192.168.0.105
+
+
+WHERE: 192.168.0.105 - is an ACTUAL IP address of machine where service is running.
+
+NOTE: Client should refer to IP (address) where the service (server) is running. In this case, if you use "registry.list()"
+you can see available services running in the specified registry.
+Client like:
+//192.168.0.105/gumballmachine
+Server like:
+... headfirst.proxy.gumball.GumballMachineTestDrive 192.168.0.105 <someOtherArguments>
+
+This means, taht server should be started having same host specified for service in the binging-method (GumballMachineTestDrive):
+Naming.rebind("//" + args[0] + "/gumballmachine", gumballMachine);
+
+This means that client should be started having same host as was specified for server in the lookup-method (GumballMonitorTestDrive):
+GumballMachineRemote machine = (GumballMachineRemote) registry.lookup("//" + args[0] + "/gumballmachine");
+
+CODE:
+public class GumballMachineTestDrive}
+....
+			gumballMachine =
+				new GumballMachine(args[0], count);
+
+			Registry registry = LocateRegistry.getRegistry();
+			registry.bind("//" + args[0] + "/gumballmachine", gumballMachine);
+			System.out.println("Waiting for requests");
+...
+}
+
+public class GumballMonitorTestDrive {
+
+	public static void main(String[] args) {
+	...
+					Registry registry = LocateRegistry.getRegistry();
+    				String[]servicesRunning = registry.list();
+    				for(int j=0; j<servicesRunning.length;j++){
+    					System.out.println(servicesRunning[j]);
+    				}
+
+    				GumballMachineRemote machine = (GumballMachineRemote) registry.lookup(location[i]);
+               		monitor[i] = new GumballMonitor(machine);
+    				System.out.println(monitor[i]);
+    ...}
