@@ -73,4 +73,11 @@ public class MatchMakingTestDrive {
 		kelly.setHotOrNotRating(6);
 		datingDB.put(kelly.getName(), kelly);
 	}
+
+	//Create instance of proxy-object for personBean, having NonOwnerInvocationHandler2 class used as "proxy requests handler"
+	PersonBean getNonOwner2Proxy(PersonBean personBean){
+		return (PersonBean) Proxy.newProxyInstance(personBean.getClass().getClassLoader(),
+					personBean.getClass().getInterfaces(),
+					new NonOnwerInvocationHandler2(personBean));
+	}
 }
