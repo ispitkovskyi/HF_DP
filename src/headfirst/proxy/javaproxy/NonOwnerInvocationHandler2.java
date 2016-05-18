@@ -4,10 +4,10 @@ import java.lang.reflect.*;
 /**
  * Created by igors on 16.04.16.
  */
-public class NonOnwerInvocationHandler2 implements InvocationHandler {
+public class NonOwnerInvocationHandler2 implements InvocationHandler {
     PersonBean personBean;
 
-    public NonOnwerInvocationHandler2(PersonBean personBean){
+    public NonOwnerInvocationHandler2(PersonBean personBean){
         this.personBean = personBean;
     }
 

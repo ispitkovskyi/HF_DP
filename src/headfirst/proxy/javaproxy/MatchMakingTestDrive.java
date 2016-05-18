@@ -38,6 +38,19 @@ public class MatchMakingTestDrive {
 		nonOwnerProxy.setHotOrNotRating(3);
 		System.out.println("Rating set from non owner proxy");
 		System.out.println("Rating is " + nonOwnerProxy.getHotOrNotRating());
+
+		//code to test my "NonOwnerInvocationHandler2" class
+		PersonBean kelly = getPersonFromDatabase("Kelly Klosure");
+		PersonBean nonOwnerProxy2 = getNonOwner2Proxy(kelly);
+		System.out.println("IGORS_PROXY Name is " + nonOwnerProxy2.getName());
+		try {
+			nonOwnerProxy2.setInterests("riding bike, Go");
+		} catch (Exception e) {
+			System.out.println("Can't set interests from non owner proxy");
+		}
+		nonOwnerProxy2.setHotOrNotRating(5);
+		System.out.println("Rating set from non owner proxy");
+		System.out.println("Rating is " + nonOwnerProxy2.getHotOrNotRating());
 	}
 
 	PersonBean getOwnerProxy(PersonBean person) {
@@ -78,6 +91,6 @@ public class MatchMakingTestDrive {
 	PersonBean getNonOwner2Proxy(PersonBean personBean){
 		return (PersonBean) Proxy.newProxyInstance(personBean.getClass().getClassLoader(),
 					personBean.getClass().getInterfaces(),
-					new NonOnwerInvocationHandler2(personBean));
+					new NonOwnerInvocationHandler2(personBean));
 	}
 }
